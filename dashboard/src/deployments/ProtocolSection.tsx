@@ -175,7 +175,7 @@ function ProtocolSection({
                       return;
                     }
                     if (!pendingObject?.fatalError) {
-                      navigate(`subgraph?endpoint=messari/${depo.hostedServiceId}&tab=protocol&version=pending`);
+                      navigate(`/subgraph?endpoint=messari/${depo.hostedServiceId}&tab=protocol&version=pending`);
                     } else {
                       window.location.href = "https://okgraph.xyz/?q=" + pendingObject?.subgraph;
                     }
@@ -370,7 +370,7 @@ function ProtocolSection({
                       return;
                     }
                     if (!pendingObject?.fatalError) {
-                      navigate(`subgraph?endpoint=messari/${depo.hostedServiceId}&tab=protocol&version=pending`);
+                      navigate(`/subgraph?endpoint=messari/${depo.hostedServiceId}&tab=protocol&version=pending`);
                     } else {
                       window.location.href = "https://okgraph.xyz/?q=" + pendingObject?.subgraph;
                     }
@@ -579,14 +579,14 @@ function ProtocolSection({
           }
 
           const decenSubgraphKey = Object.keys(decenDeposToSubgraphIds)?.find(
-            (x) => x.includes(subgraphName) || x.includes(depo?.decentralizedNetworkId),
+            (x) => x.includes(subgraphName + "-" + depo?.chain) || x.includes(depo?.decentralizedNetworkId),
           );
           let decenSubgraphId = decenObject?.subgraph;
           if (decenSubgraphKey) {
             decenSubgraphId = decenDeposToSubgraphIds[decenSubgraphKey]?.id;
           }
           let endpointURL =
-            "https://gateway.thegraph.com/api/" +
+            "https://gateway-arbitrum.network.thegraph.com/api/" +
             process.env.REACT_APP_GRAPH_API_KEY +
             "/subgraphs/id/" +
             decenSubgraphId;
@@ -664,7 +664,10 @@ function ProtocolSection({
               onClick={(event) => {
                 if (event.ctrlKey) {
                   if (!validationSupported) {
-                    window.open(`https://thegraph.com/explorer/subgraph?id=${decenSubgraphId}&view=Overview`, "_blank");
+                    window.open(
+                      `https://thegraph.com/explorer/subgraph?id=${decenSubgraphId}&view=Overview&chain=arbitrum-one`,
+                      "_blank",
+                    );
                     return;
                   }
                   if (!decenObject?.fatalError) {
@@ -674,11 +677,11 @@ function ProtocolSection({
                   }
                 } else {
                   if (!validationSupported) {
-                    window.location.href = `https://thegraph.com/explorer/subgraph?id=${decenSubgraphId}&view=Overview`;
+                    window.location.href = `https://thegraph.com/explorer/subgraph?id=${decenSubgraphId}&view=Overview&chain=arbitrum-one`;
                     return;
                   }
                   if (!decenObject?.fatalError) {
-                    navigate(`subgraph?endpoint=${endpointURL}&tab=protocol`);
+                    navigate(`/subgraph?endpoint=${endpointURL}&tab=protocol`);
                   } else {
                     window.location.href = "https://okgraph.xyz/?q=" + depo.decentralizedNetworkId;
                   }
@@ -947,7 +950,7 @@ function ProtocolSection({
                       return;
                     }
                     if (!currentObject?.fatalError) {
-                      navigate(`subgraph?endpoint=${subgraphUrlBase}messari/${depo.hostedServiceId}&tab=protocol`);
+                      navigate(`/subgraph?endpoint=${subgraphUrlBase}messari/${depo.hostedServiceId}&tab=protocol`);
                     } else {
                       window.location.href = "https://okgraph.xyz/?q=messari/" + depo.hostedServiceId;
                     }
@@ -1145,7 +1148,7 @@ function ProtocolSection({
                     return;
                   }
                   if (!currentObject?.fatalError) {
-                    navigate(`subgraph?endpoint=${subgraphUrlBase}messari/${depo.hostedServiceId}&tab=protocol`);
+                    navigate(`/subgraph?endpoint=${subgraphUrlBase}messari/${depo.hostedServiceId}&tab=protocol`);
                   } else {
                     window.location.href = "https://okgraph.xyz/?q=messari/" + depo.hostedServiceId;
                   }
